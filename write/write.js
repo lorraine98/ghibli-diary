@@ -1,4 +1,4 @@
-import { editDiary, getDiaries, postDiary } from "../api/diaries.js";
+import { editDiary, getDiary, postDiary } from "../api/diaries.js";
 import { confirmMessage, errorMessage } from "../common/error-message.js";
 import { queryParamKeys, routes } from "../common/routes.js";
 import {
@@ -108,7 +108,7 @@ const bindButtonsEvent = () => {
 
 const init = async () => {
   if (isEditMode) {
-    const { data, ok } = await getDiaries(diaryId);
+    const { data, ok } = await getDiary(diaryId);
 
     if (!ok) {
       alert(errorMessage.failToFetchDiary);

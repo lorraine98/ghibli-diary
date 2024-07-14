@@ -1,4 +1,4 @@
-import { deleteDiary, getDiaries } from "../api/diaries.js";
+import { deleteDiary, getDiary } from "../api/diaries.js";
 import { errorMessage } from "../common/error-message.js";
 import { queryParamKeys, routes } from "../common/routes.js";
 
@@ -19,7 +19,6 @@ const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-
   return `${year}-${month}-${day}`;
 };
 
@@ -31,35 +30,35 @@ const getDiaryId = () => {
 };
 
 const renderDiary = (diary) => {
-  const movieTitle = document.querySelector(".movie-title");
-  movieTitle.textContent = diary.movie.title;
+  const $movieTitle = document.querySelector(".movie-title");
+  $movieTitle.textContent = diary.movie.title;
 
-  const poster = document.querySelector(".poster");
-  poster.src = diary.movie.posterUrl;
+  const $poster = document.querySelector(".poster");
+  $poster.src = diary.movie.posterUrl;
 
-  const releaseDate = document.querySelector(".release-date");
+  const $releaseDate = document.querySelector(".release-date");
 
   const releaseDateStr = formatDate(new Date(diary.movie.releaseDate));
-  releaseDate.textContent = releaseDateStr;
+  $releaseDate.textContent = releaseDateStr;
 
-  const rating = document.querySelector(".rating");
-  rating.textContent = `⭐️ ${diary.movie.rating}`;
+  const $rating = document.querySelector(".rating");
+  $rating.textContent = `⭐️ ${diary.movie.rating}`;
 
-  const createdAt = document.querySelector(".created-at");
+  const $createdAt = document.querySelector(".created-at");
   const createdDateStr = formatDate(new Date(diary.createdAt));
-  createdAt.textContent = createdDateStr;
+  $createdAt.textContent = createdDateStr;
 
-  const evaluation = document.querySelector(".evaluation");
+  const $evaluation = document.querySelector(".evaluation");
   const evaluationText = getEvaluationText(diary.evaluation);
-  evaluation.textContent = evaluationText;
+  $evaluation.textContent = evaluationText;
 
-  const content = document.querySelector(".content");
-  content.textContent = diary.content;
+  const $content = document.querySelector(".content");
+  $content.textContent = diary.content;
 };
 
-const fetchDiary = async () => {
+const fetchAndRenderDiary = async () => {
   const id = getDiaryId();
-  const { data, ok } = await getDiaries(id);
+  const { data, ok } = await getDiary(id);
 
   if (!ok) {
     alert(errorMessage.failToFetchDiary);
@@ -69,44 +68,47 @@ const fetchDiary = async () => {
   renderDiary(data.diary);
 };
 
-const bindButtonsEvent = () => {
-  const editButton = document.querySelector(".edit-button");
-  const deleteButton = document.querySelector(".delete-button");
-  const dialog = document.querySelector(".delete-dialog");
+const handleDeleteConfirmBtnClick = async () => {
+  const id = getDiaryId();
+  const result = await deleteDiary(id);
+  if (result.ok) {
+    window.location.replace(routes.HOME);
+  } else {
+    alert(errorMessage.failToDeleteDiary);
+  }
+};
 
-  editButton.addEventListener("click", () => {
+const bindButtonsEvent = () => {
+  const $editBtn = document.querySelector(".edit-button");
+  const $deleteBtn = document.querySelector(".delete-button");
+  const $deleteConfirmDialog = document.querySelector(".delete-dialog");
+
+  $editBtn.addEventListener("click", () => {
     const id = getDiaryId();
     window.location.href = `${routes.WRITE}?${queryParamKeys.DIARY_ID}=${id}`;
   });
 
-  deleteButton.addEventListener("click", () => {
-    dialog.showModal();
+  $deleteBtn.addEventListener("click", () => {
+    $deleteConfirmDialog.showModal();
   });
 
-  dialog
-    .querySelector(".delete-cancel-button")
-    .addEventListener("click", () => {
-      dialog.close();
-    });
-
-  const handleDeleteConfirmBtnClick = async () => {
-    const id = getDiaryId();
-    const result = await deleteDiary(id);
-    if (result.ok) {
-      window.location.replace(routes.HOME);
-    } else {
-      alert(errorMessage.failToDeleteDiary);
+  $deleteConfirmDialog.addEventListener("click", (e) => {
+    const $cancelBtn = e.target.closest(".delete-cancel-button");
+    if ($cancelBtn) {
+      $deleteConfirmDialog.close();
+      return;
     }
-  };
 
-  dialog
-    .querySelector(".delete-confirm-button")
-    .addEventListener("click", handleDeleteConfirmBtnClick);
+    const $confirmBtn = e.target.closest(".delete-confirm-button");
+    if ($confirmBtn) {
+      handleDeleteConfirmBtnClick();
+    }
+  });
 };
 
 const init = () => {
-  fetchDiary();
   bindButtonsEvent();
+  fetchAndRenderDiary();
 };
 
 init();

@@ -4,19 +4,19 @@ import { queryParamKeys, routes } from "../common/routes.js";
 import { getSearchParamValue } from "../common/url-util.js";
 
 const renderMovieElements = (movies, isDiaryWritten) => {
-  const movieContainer = document.querySelector(".movie-list");
+  const $movieContainer = document.querySelector(".movie-list");
 
   if (movies.length === 0) {
-    const movieElement = document.createElement("li");
+    const $movie = document.createElement("li");
     isDiaryWritten
-      ? (movieElement.textContent = "아직 기록한 작품이 없어요")
-      : (movieElement.textContent = "모든 작품을 기록했어요");
-    movieContainer.replaceChildren(movieElement);
+      ? ($movie.textContent = "아직 기록한 작품이 없어요")
+      : ($movie.textContent = "모든 작품을 기록했어요");
+    $movieContainer.replaceChildren($movie);
     return;
   }
 
-  const newMovieElements = movies.map(createMovieElement);
-  movieContainer.replaceChildren(...newMovieElements);
+  const $newMovies = movies.map(createMovieElement);
+  $movieContainer.replaceChildren(...$newMovies);
 };
 
 const createMovieElement = (movie) => {
@@ -26,25 +26,25 @@ const createMovieElement = (movie) => {
     ? `${routes.DETAIL}?${queryParamKeys.DIARY_ID}=${diaryId}`
     : `${routes.WRITE}?${queryParamKeys.MOVIE_ID}=${id}&${queryParamKeys.MOVIE_TITLE}=${title}`;
 
-  const movieElement = document.createElement("li");
+  const $movie = document.createElement("li");
 
-  const linkElement = document.createElement("a");
-  linkElement.setAttribute("href", href);
-  linkElement.classList.add("movie-link");
+  const $link = document.createElement("a");
+  $link.setAttribute("href", href);
+  $link.classList.add("movie-link");
 
-  const posterElement = document.createElement("img");
-  posterElement.setAttribute("src", posterUrl);
-  posterElement.setAttribute("alt", title);
-  posterElement.classList.add("poster");
+  const $poster = document.createElement("img");
+  $poster.setAttribute("src", posterUrl);
+  $poster.setAttribute("alt", title);
+  $poster.classList.add("poster");
 
-  const titleElement = document.createElement("span");
-  titleElement.textContent = title;
+  const $title = document.createElement("span");
+  $title.textContent = title;
 
-  linkElement.appendChild(posterElement);
-  linkElement.appendChild(titleElement);
+  $link.appendChild($poster);
+  $link.appendChild($title);
 
-  movieElement.appendChild(linkElement);
-  return movieElement;
+  $movie.appendChild($link);
+  return $movie;
 };
 
 const fetchMoviesByDiaryWritten = async (isDiaryWritten) => {
@@ -57,9 +57,8 @@ const fetchMoviesByDiaryWritten = async (isDiaryWritten) => {
 };
 
 const handleTabClick = async (event) => {
-  const tabElement = event.target.closest(".tab");
-  const isDiaryWritten =
-    tabElement.getAttribute("data-diary-written") === "true";
+  const $tab = event.target.closest(".tab");
+  const isDiaryWritten = $tab.getAttribute("data-diary-written") === "true";
   activateTab(isDiaryWritten);
 
   const movies = await fetchMoviesByDiaryWritten(isDiaryWritten);
@@ -67,17 +66,17 @@ const handleTabClick = async (event) => {
 };
 
 const bindTabClickEvent = () => {
-  const tabContainer = document.querySelector(".tab-container");
-  tabContainer.addEventListener("click", handleTabClick);
+  const $tabContainer = document.querySelector(".tab-container");
+  $tabContainer.addEventListener("click", handleTabClick);
 };
 
 const activateTab = (isDiaryWritten) => {
-  const tabContainer = document.querySelector(".tab-container");
-  const tabElements = tabContainer.querySelectorAll(".tab");
-  tabElements.forEach((tabElement) => {
+  const $tabContainer = document.querySelector(".tab-container");
+  const $tabs = $tabContainer.querySelectorAll(".tab");
+  $tabs.forEach(($tab) => {
     const isActive =
-      tabElement.getAttribute("data-diary-written") === String(isDiaryWritten);
-    tabElement.classList.toggle("active", isActive);
+      $tab.getAttribute("data-diary-written") === String(isDiaryWritten);
+    $tab.classList.toggle("active", isActive);
   });
 
   const newUrl = `${routes.HOME}?${queryParamKeys.IS_DIARY_WRITTEN}=${isDiaryWritten}`;

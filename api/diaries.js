@@ -1,6 +1,6 @@
 import { privateRequester } from "./private-requester.js";
 
-export const getDiaries = async (id) => {
+export const getDiary = async (id) => {
   const result = await privateRequester.get(`/api/v1/diaries/${id}`);
   return result;
 };
