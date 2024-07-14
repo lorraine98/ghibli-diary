@@ -23,10 +23,9 @@ const renderMovies = (movies) => {
   movies.forEach((movie) => {
     const { id, title, posterUrl, diaryId } = movie;
 
-    // todo : session storage에 title 저장하기
     const href = diaryId
-      ? `${Routes.detail}?movie-id=${id}&diary-id=${diaryId}`
-      : `${Routes.write}?movie-id=${id}`;
+      ? `${Routes.detail}?${QueryParamKeys.movieId}=${id}&${QueryParamKeys.diaryId}=${diaryId}`
+      : `${Routes.write}?${QueryParamKeys.movieId}=${id}`;
 
     const li = document.createElement("li");
     const a = document.createElement("a");
@@ -48,6 +47,7 @@ const renderMovies = (movies) => {
 };
 
 const pushWithNewUrl = () => {
+  // `${Routes.home}?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`
   const uriBuilder = new URL(window.location.href);
   uriBuilder.search = `?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`;
   const newUrl = uriBuilder.href;
