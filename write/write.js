@@ -1,4 +1,5 @@
 import { editDiary, getDiaries, postDiary } from "../api/diaries.js";
+import { ConfirmMessages, ErrorMessages } from "../common/error-message.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
 import {
   loadWritingDiary,
@@ -21,11 +22,11 @@ const handlePostDiary = async (requestForm) => {
   const res = await postDiary(requestForm);
 
   if (!res.ok) {
-    alert("일기 작성에 실패했어요");
+    alert(ErrorMessages.failToPostDiary);
     return;
   }
 
-  alert("일기를 작성했어요");
+  alert(ConfirmMessages.successToWriteDiary);
   window.location.replace(
     `${Routes.detail}?${QueryParamKeys.diaryId}=${res.data}`
   );
@@ -35,11 +36,11 @@ const handleEditDiary = async (requestForm) => {
   const res = await editDiary(diaryId, requestForm);
 
   if (!res.ok) {
-    alert("일기 수정에 실패했어요");
+    alert(ErrorMessages.failToEditDiary);
     return;
   }
 
-  alert("일기를 수정했어요");
+  alert(ConfirmMessages.successToEditDiary);
   window.location.replace(
     `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
   );
@@ -49,11 +50,11 @@ const bindFormEvents = () => {
   const writeForm = document.querySelector(".write-form");
 
   const handleChange = (e) => {
-    const form = e.currentTarget;
-
     if (isEditMode) {
       return;
     }
+
+    const form = e.currentTarget;
 
     const contentTextarea = form.querySelector(".content");
     const checkedEvaluationRadio = form.querySelector(
@@ -92,7 +93,7 @@ const bindButtonsEvent = () => {
     );
 
     if (!contentTextarea.checkValidity()) {
-      alert("내용을 입력해주세요.");
+      alert(ErrorMessages.pleaseFillOutContent);
       return;
     }
 
@@ -110,7 +111,7 @@ const init = async () => {
     const { data, ok } = await getDiaries(diaryId);
 
     if (!ok) {
-      console.error("failed to fetch diary");
+      alert(ErrorMessages.failToFetchDiary);
       return;
     }
 

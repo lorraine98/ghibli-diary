@@ -1,4 +1,5 @@
 import { fetchMovies } from "../api/movies.js";
+import { ErrorMessages } from "../common/error-message.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
 import { getSearchParamValue } from "../common/url-util.js";
 
@@ -55,9 +56,9 @@ const pushWithNewUrl = (isDiaryWritten) => {
 };
 
 const fetchMoviesByDiaryWritten = async (isDiaryWritten) => {
-  const { data, ok, error } = await fetchMovies(isDiaryWritten);
+  const { data, ok } = await fetchMovies(isDiaryWritten);
   if (!ok) {
-    console.error(error);
+    alert(ErrorMessages.failToFetchMovies);
     return [];
   }
   return data.movies;

@@ -1,4 +1,5 @@
 import { deleteDiary, getDiaries } from "../api/diaries.js";
+import { ErrorMessages } from "../common/error-message.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
 
 const getEvaluationText = (evaluation) => {
@@ -61,7 +62,7 @@ const fetchDiary = async () => {
   const { data, ok } = await getDiaries(id);
 
   if (!ok) {
-    console.error("failed to fetch diary");
+    alert(ErrorMessages.failToFetchDiary);
     return;
   }
 
@@ -94,7 +95,7 @@ const bindButtonsEvent = () => {
     if (result.ok) {
       window.location.replace(Routes.home);
     } else {
-      alert("일기 삭제에 실패했어요. 다시 시도해주세요.");
+      alert(ErrorMessages.failToDeleteDiary);
     }
   };
 
