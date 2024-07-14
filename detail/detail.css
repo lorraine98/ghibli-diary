@@ -1,5 +1,9 @@
 @import '/common/styles/global.css';
 
+.detail-container {
+  margin: var(--gap-header) 0;
+}
+
 .movie-title {
   text-align: center;
   margin-top: 20px;
@@ -65,4 +69,6 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
 }

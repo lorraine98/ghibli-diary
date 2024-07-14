@@ -1,7 +1,10 @@
 @import '/common/styles/global.css';
 
+.container {
+  margin: var(--gap-header) 20px;
+}
+
 .title {
-  margin-top: 20px;
   font-size: var(--text-large);
   font-weight: bold;
 }
@@ -60,4 +63,8 @@
 .poster {
   width: 200px;
   border-radius: 4px;
+}
+
+.movie-title {
+  display: block;
 }

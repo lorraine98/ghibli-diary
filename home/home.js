@@ -39,6 +39,7 @@ const createMovieElement = (movie) => {
 
   const $title = document.createElement("span");
   $title.textContent = title;
+  $title.classList.add("movie-title");
 
   $link.appendChild($poster);
   $link.appendChild($title);
