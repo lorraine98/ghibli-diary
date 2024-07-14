@@ -38,7 +38,7 @@
   margin-right: 10px;
 }
 
-.movies-list {
+.movie-list {
   list-style-type: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -46,14 +46,14 @@
   justify-items: center;
 }
 
-.movie-title {
+.movie-link {
   color: var(--color-black);
   text-decoration: none;
   outline: none;
 }
 
-.movie-title:hover,
-.movie-title:active {
+.movie-link:hover,
+.movie-link:active {
   text-decoration: none;
 }
 

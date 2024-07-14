@@ -1,10 +1,10 @@
 const API_BASE_URL = "http://localhost:3000";
 
-const StatusCode = {
-  Unknown: -1,
+const statusCode = {
+  UNKNOWN: -1,
 };
 
-const RequestMethod = {
+const requestMethod = {
   GET: "GET",
   POST: "POST",
   PATCH: "PATCH",
@@ -17,11 +17,20 @@ const request = async (path, options = {}) => {
   try {
     const response = await fetch(uri, options);
 
-    const hasJsonData = response.headers
+    const hasContent =
+      response.headers.has("Content-Length") &&
+      response.headers.get("Content-Length") !== "0";
+
+    const isJsonResponse = response.headers
       .get("Content-Type")
       ?.includes("application/json");
 
-    const data = hasJsonData ? await response.json() : await response.text();
+    const hasReceivedUnexpectedData = hasContent && !isJsonResponse;
+    if (hasReceivedUnexpectedData) {
+      console.warn("Unexpected data received", await response.text());
+    }
+
+    const data = isJsonResponse ? await response.json() : undefined;
 
     return {
       ok: response.ok,
@@ -32,7 +41,7 @@ const request = async (path, options = {}) => {
     console.error(error);
     return {
       ok: false,
-      statusCode: StatusCode.Unknown,
+      statusCode: statusCode.UNKNOWN,
       error,
     };
   }
@@ -53,7 +62,7 @@ const post = (urlPath, body = {}, options = {}) => {
 
   return request(urlPath, {
     ...options,
-    method: RequestMethod.POST,
+    method: requestMethod.POST,
     body: JSON.stringify(body),
   });
 };
@@ -67,7 +76,7 @@ const patch = (urlPath, body = {}, options = {}) => {
 
   return request(urlPath, {
     ...options,
-    method: RequestMethod.PATCH,
+    method: requestMethod.PATCH,
     body: JSON.stringify(body),
   });
 };
@@ -77,7 +86,7 @@ const remove = (urlPath, queryParams = {}, options = {}) => {
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
   return request(url, {
     ...options,
-    method: RequestMethod.DELETE,
+    method: requestMethod.DELETE,
   });
 };
 

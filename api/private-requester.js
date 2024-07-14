@@ -1,5 +1,5 @@
 import { getAccessToken, saveAccessToken } from "../common/auth.js";
-import { ErrorMessages } from "../common/error-message.js";
+import { errorMessage } from "../common/error-message.js";
 import { requester } from "./requester.js";
 
 const createOptionsWithAccessToken = async (options = {}) => {
@@ -8,7 +8,7 @@ const createOptionsWithAccessToken = async (options = {}) => {
   if (!accessToken) {
     const { data, ok } = await requester.post("/api/v1/auth/login");
     if (!ok) {
-      console.error(ErrorMessages.failToLogin);
+      console.error(errorMessage.failToLogin);
       return options;
     }
     accessToken = data.accessToken;

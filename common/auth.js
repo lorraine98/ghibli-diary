@@ -4,11 +4,9 @@ let cachedAccessToken = "";
 
 export const getAccessToken = () => {
   if (cachedAccessToken) {
-    console.debug(`Using cached access token: ${cachedAccessToken}`);
     return cachedAccessToken;
   }
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY) ?? "";
-  console.debug(`try loading access token : ${accessToken}`);
   cachedAccessToken = accessToken;
   return accessToken;
 };

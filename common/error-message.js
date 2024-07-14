@@ -1,4 +1,4 @@
-export const ErrorMessages = {
+export const errorMessage = {
   failToLogin: "로그인에 실패했어요",
   failToFetchDiary: "일기를 불러오는 데 실패했어요",
   failToPostDiary: "일기를 작성하는 데 실패했어요",
@@ -8,7 +8,7 @@ export const ErrorMessages = {
   pleaseFillOutContent: "내용을 입력해주세요",
 };
 
-export const ConfirmMessages = {
+export const confirmMessage = {
   successToWriteDiary: "일기를 작성했어요",
   successToEditDiary: "일기를 수정했어요",
 };

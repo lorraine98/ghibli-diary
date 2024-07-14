@@ -1,15 +1,15 @@
 import { editDiary, getDiaries, postDiary } from "../api/diaries.js";
-import { ConfirmMessages, ErrorMessages } from "../common/error-message.js";
-import { QueryParamKeys, Routes } from "../common/routes.js";
+import { confirmMessage, errorMessage } from "../common/error-message.js";
+import { queryParamKeys, routes } from "../common/routes.js";
 import {
   loadWritingDiary,
   saveWritingDiary,
 } from "../common/session-storage.js";
 import { getSearchParamValue } from "../common/url-util.js";
 
-const movieId = getSearchParamValue(QueryParamKeys.movieId);
-const movieTitle = getSearchParamValue(QueryParamKeys.movieTitle);
-const diaryId = getSearchParamValue(QueryParamKeys.diaryId);
+const movieId = getSearchParamValue(queryParamKeys.MOVIE_ID);
+const movieTitle = getSearchParamValue(queryParamKeys.MOVIE_TITLE);
+const diaryId = getSearchParamValue(queryParamKeys.DIARY_ID);
 
 const isEditMode = !!diaryId;
 
@@ -22,13 +22,13 @@ const handlePostDiary = async (requestForm) => {
   const res = await postDiary(requestForm);
 
   if (!res.ok) {
-    alert(ErrorMessages.failToPostDiary);
+    alert(errorMessage.failToPostDiary);
     return;
   }
 
-  alert(ConfirmMessages.successToWriteDiary);
+  alert(confirmMessage.successToWriteDiary);
   window.location.replace(
-    `${Routes.detail}?${QueryParamKeys.diaryId}=${res.data}`
+    `${routes.DETAIL}?${queryParamKeys.DIARY_ID}=${res.data}`
   );
 };
 
@@ -36,13 +36,13 @@ const handleEditDiary = async (requestForm) => {
   const res = await editDiary(diaryId, requestForm);
 
   if (!res.ok) {
-    alert(ErrorMessages.failToEditDiary);
+    alert(errorMessage.failToEditDiary);
     return;
   }
 
-  alert(ConfirmMessages.successToEditDiary);
+  alert(confirmMessage.successToEditDiary);
   window.location.replace(
-    `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
+    `${routes.DETAIL}?${queryParamKeys.DIARY_ID}=${diaryId}`
   );
 };
 
@@ -79,8 +79,8 @@ const bindButtonsEvent = () => {
 
   cancelButton.addEventListener("click", () => {
     const to = isEditMode
-      ? `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
-      : Routes.home;
+      ? `${routes.DETAIL}?${queryParamKeys.DIARY_ID}=${diaryId}`
+      : routes.HOME;
     window.location.href = to;
   });
 
@@ -93,7 +93,7 @@ const bindButtonsEvent = () => {
     );
 
     if (!contentTextarea.checkValidity()) {
-      alert(ErrorMessages.pleaseFillOutContent);
+      alert(errorMessage.pleaseFillOutContent);
       return;
     }
 
@@ -111,7 +111,7 @@ const init = async () => {
     const { data, ok } = await getDiaries(diaryId);
 
     if (!ok) {
-      alert(ErrorMessages.failToFetchDiary);
+      alert(errorMessage.failToFetchDiary);
       return;
     }
 

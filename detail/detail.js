@@ -1,6 +1,6 @@
 import { deleteDiary, getDiaries } from "../api/diaries.js";
-import { ErrorMessages } from "../common/error-message.js";
-import { QueryParamKeys, Routes } from "../common/routes.js";
+import { errorMessage } from "../common/error-message.js";
+import { queryParamKeys, routes } from "../common/routes.js";
 
 const getEvaluationText = (evaluation) => {
   switch (evaluation) {
@@ -25,7 +25,7 @@ const formatDate = (date) => {
 
 const getDiaryId = () => {
   const diaryId = new URLSearchParams(window.location.search).get(
-    QueryParamKeys.diaryId
+    queryParamKeys.DIARY_ID
   );
   return diaryId;
 };
@@ -62,7 +62,7 @@ const fetchDiary = async () => {
   const { data, ok } = await getDiaries(id);
 
   if (!ok) {
-    alert(ErrorMessages.failToFetchDiary);
+    alert(errorMessage.failToFetchDiary);
     return;
   }
 
@@ -76,7 +76,7 @@ const bindButtonsEvent = () => {
 
   editButton.addEventListener("click", () => {
     const id = getDiaryId();
-    window.location.href = `${Routes.write}?${QueryParamKeys.diaryId}=${id}`;
+    window.location.href = `${routes.WRITE}?${queryParamKeys.DIARY_ID}=${id}`;
   });
 
   deleteButton.addEventListener("click", () => {
@@ -93,9 +93,9 @@ const bindButtonsEvent = () => {
     const id = getDiaryId();
     const result = await deleteDiary(id);
     if (result.ok) {
-      window.location.replace(Routes.home);
+      window.location.replace(routes.HOME);
     } else {
-      alert(ErrorMessages.failToDeleteDiary);
+      alert(errorMessage.failToDeleteDiary);
     }
   };
 

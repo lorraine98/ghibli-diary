@@ -1,12 +1,12 @@
-export const Routes = Object.freeze({
-  home: "/home.html",
-  write: "/write.html",
-  detail: "/detail.html",
+export const routes = Object.freeze({
+  HOME: "/home.html",
+  WRITE: "/write.html",
+  DETAIL: "/detail.html",
 });
 
-export const QueryParamKeys = Object.freeze({
-  isDiaryWritten: "is-diary-written",
-  diaryId: "diary-id",
-  movieId: "movie-id",
-  movieTitle: "movie-title",
+export const queryParamKeys = Object.freeze({
+  IS_DIARY_WRITTEN: "is-diary-written",
+  DIARY_ID: "diary-id",
+  MOVIE_ID: "movie-id",
+  MOVIE_TITLE: "movie-title",
 });
