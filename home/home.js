@@ -1,5 +1,6 @@
 import { fetchMovies } from "../api/movies.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
+import { saveWritingMovie } from "../common/session-storage.js";
 
 const queryParams = new URLSearchParams(window.location.search);
 let isDiaryWritten = queryParams.get(QueryParamKeys.isDiaryWritten) === "true";
@@ -25,9 +26,14 @@ const renderMovies = (movies) => {
 
     const href = diaryId
       ? `${Routes.detail}?${QueryParamKeys.movieId}=${id}&${QueryParamKeys.diaryId}=${diaryId}`
-      : `${Routes.write}?${QueryParamKeys.movieId}=${id}`;
+      : `${Routes.write}`;
 
     const li = document.createElement("li");
+
+    li.addEventListener("click", () => {
+      saveWritingMovie({ id, title });
+    });
+
     const a = document.createElement("a");
     a.setAttribute("href", href);
 

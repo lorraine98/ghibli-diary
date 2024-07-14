@@ -1,5 +1,28 @@
 import { postDiary } from "../api/diaries.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
+import { loadWritingMovie } from "../common/session-storage.js";
+
+let movieId;
+
+const renderMovieTitle = (movieTitle) => {
+  const titleElement = document.querySelector(".title");
+  titleElement.textContent = movieTitle;
+};
+
+const getWritingMovie = () => {
+  const writingMovie = loadWritingMovie();
+
+  if (!writingMovie) {
+    alert("잘못된 접근입니다.");
+    window.location.href = Routes.home;
+    return;
+  }
+
+  const { id, title } = writingMovie;
+
+  movieId = id;
+  renderMovieTitle(title);
+};
 
 const addButtonsEvent = () => {
   const cancelButton = document.querySelector(".cancel-button");
@@ -11,9 +34,7 @@ const addButtonsEvent = () => {
 
   submitButton.addEventListener("click", async (e) => {
     e.preventDefault();
-    const movieId = new URLSearchParams(window.location.search).get(
-      QueryParamKeys.movieId
-    );
+
     const contentTextarea = document.querySelector(".content");
     const checkedEvaluationRadio = document.querySelector(
       'input[name="evaluation"]:checked'
@@ -43,6 +64,7 @@ const addButtonsEvent = () => {
 };
 
 const init = () => {
+  getWritingMovie();
   addButtonsEvent();
 };
 
