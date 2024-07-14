@@ -70,8 +70,8 @@ const fetchAndRenderDiary = async () => {
 
 const handleDeleteConfirmBtnClick = async () => {
   const id = getDiaryId();
-  const result = await deleteDiary(id);
-  if (result.ok) {
+  const { ok } = await deleteDiary(id);
+  if (ok) {
     window.location.replace(routes.HOME);
   } else {
     alert(errorMessage.failToDeleteDiary);

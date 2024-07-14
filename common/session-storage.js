@@ -1,3 +1,8 @@
+const deleteFromSessionStorage = (key) => {
+  console.assert(typeof key === "string", "key must be a string");
+  sessionStorage.removeItem(key);
+};
+
 const loadFromSessionStorage = (key) => {
   console.assert(typeof key === "string", "key must be a string");
   const item = sessionStorage.getItem(key);
@@ -24,4 +29,11 @@ export const saveWritingDiary = ({ movieId, ...rest }) => {
  */
 export const loadWritingDiary = (movieId) => {
   return loadFromSessionStorage(`${writeDiaryPrefix}${movieId}`);
+};
+
+/**
+ * @param {string} movieId
+ */
+export const deleteWritingDiary = (movieId) => {
+  deleteFromSessionStorage(`${writeDiaryPrefix}${movieId}`);
 };
