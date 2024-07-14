@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./home/home.css" />
-  </head>
-  <body>
-    <p>작품을 클릭해보세요</p>
-    <p>내가 기록한 내용을 상세하게 볼 수 있어요</p>
-    <nav>
-      <button data-diary-written="false" class="tab tab-button-first">
-        기록하지 않은 작품
-      </button>
-      <button data-diary-written="true" class="tab tab-button-second">
-        기록한 작품
-      </button>
-      <ul class="movies-list"></ul>
-    </nav>
-    <script src="./home/home.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./home/home.css" />
+</head>
+
+<body>
+  <h1 class="title">작품을 클릭해보세요</h1>
+  <p class="description">내가 기록한 내용을 상세하게 볼 수 있어요</p>
+  <nav class="navigation">
+    <button data-diary-written="false" class="tab tab-button-first">
+      기록하지 않은 작품
+    </button>
+    <button data-diary-written="true" class="tab tab-button-second">
+      기록한 작품
+    </button>
+  </nav>
+  <ul class="movies-list"></ul>
+  <script src="./home/home.js" type="module"></script>
+</body>
+
 </html>

@@ -11,7 +11,9 @@ body {
 
 :root {
   --text-large: 54px;
+  --text-medium: 24px;
 
+  --color-black: #000;
   --color-white: #fff;
   --color-gray: #777;
   --color-pink: #E55E70;

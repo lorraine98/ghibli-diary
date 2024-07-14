@@ -1,1 +1,59 @@
-@import '/common/styles/global.css'
+@import '/common/styles/global.css';
+
+.title {
+  margin-top: 20px;
+  font-size: var(--text-large);
+  font-weight: bold;
+}
+
+.description {
+  margin-bottom: 20px;
+  font-size: var(--text-medium);
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.tab:hover {
+  color: var(--color-pink);
+}
+
+.tab-button-first {
+  margin-right: 10px;
+}
+
+.movies-list {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 10px;
+  justify-items: center;
+}
+
+.movie-title {
+  color: var(--color-black);
+  text-decoration: none;
+  outline: none;
+}
+
+.movie-title:hover,
+.movie-title:active {
+  text-decoration: none;
+}
+
+.poster {
+  width: 200px;
+  border-radius: 4px;
+}

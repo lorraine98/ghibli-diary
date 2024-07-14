@@ -30,11 +30,12 @@ const renderMovies = (movies) => {
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.setAttribute("href", href);
+    a.classList.add("movie-title");
 
     const img = document.createElement("img");
     img.setAttribute("src", posterUrl);
     img.setAttribute("alt", title);
-    img.setAttribute("width", "200px");
+    img.classList.add("poster");
 
     const p = document.createElement("p");
     p.textContent = title;
