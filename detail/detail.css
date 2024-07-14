@@ -4,6 +4,7 @@
   text-align: center;
   margin-top: 20px;
   font-size: var(--text-large);
+  font-weight: bold;
 }
 
 .diary-container {
@@ -29,6 +30,7 @@
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
+  min-width: 300px;
 }
 
 .content-container {

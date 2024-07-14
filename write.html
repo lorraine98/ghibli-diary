@@ -1,43 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./write/write.css" />
-  </head>
-  <body>
-    <h1 class="title"></h1>
-    <form>
-      <p>작품은 어땠나요?</p>
-      <div class="evaluation">
-        <input
-          checked
-          type="radio"
-          id="excellent"
-          name="evaluation"
-          value="excellent"
-        />
-        <label for="excellent"> 👍 최고예요 </label>
 
-        <input type="radio" id="average" name="evaluation" value="average" />
-        <label for="average"> 💪 무난해요 </label>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./write/write.css" />
+</head>
 
-        <input type="radio" id="poor" name="evaluation" value="poor" />
-        <label for="poor"> 👎 별로예요 </label>
-      </div>
+<body>
+  <h1 class="title"></h1>
+  <form>
+    <p>작품은 어땠나요?</p>
+    <div class="evaluation">
+      <input checked type="radio" id="excellent" name="evaluation" value="excellent" />
+      <label for="excellent"> 👍 최고예요 </label>
 
-      <p>어떤 내용을 기록하고 싶나요?</p>
-      <textarea
-        class="content"
-        required
-        placeholder="여기에 적어주세요"
-      ></textarea>
-      <div>
-        <button class="cancel-button">취소</button>
-        <button class="submit-button" type="submit">완료</button>
-      </div>
-    </form>
-    <script src="./write/write.js" type="module"></script>
-  </body>
+      <input type="radio" id="average" name="evaluation" value="average" />
+      <label for="average"> 💪 무난해요 </label>
+
+      <input type="radio" id="poor" name="evaluation" value="poor" />
+      <label for="poor"> 👎 별로예요 </label>
+    </div>
+
+    <p>어떤 내용을 기록하고 싶나요?</p>
+    <textarea class="content" required placeholder="여기에 적어주세요"></textarea>
+    <div>
+      <button class="cancel-button">취소</button>
+      <button class="submit-button" type="submit">완료</button>
+    </div>
+  </form>
+  <script src="./write/write.js" type="module"></script>
+</body>
+
 </html>
