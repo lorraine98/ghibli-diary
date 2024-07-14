@@ -22,3 +22,7 @@ export const loadWritingMovie = () => {
 export const saveWritingMovie = (movie) => {
   saveToSessionStorage(WRITING_MOVIE_KEY, movie);
 };
+
+export const removeWritingMovie = () => {
+  sessionStorage.removeItem(WRITING_MOVIE_KEY);
+}

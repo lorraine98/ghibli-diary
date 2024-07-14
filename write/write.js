@@ -1,6 +1,9 @@
 import { postDiary } from "../api/diaries.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
-import { loadWritingMovie } from "../common/session-storage.js";
+import {
+  loadWritingMovie,
+  removeWritingMovie,
+} from "../common/session-storage.js";
 
 let movieId;
 
@@ -58,8 +61,11 @@ const addButtonsEvent = () => {
       return;
     }
 
+    removeWritingMovie();
     alert("일기를 작성했어요");
-    window.location.href = `${Routes.detail}?${QueryParamKeys.movieId}=${movieId}`;
+    window.location.replace(
+      `${Routes.detail}?${QueryParamKeys.diaryId}=${res.data.id}`
+    );
   });
 };
 

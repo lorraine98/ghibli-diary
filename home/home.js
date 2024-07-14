@@ -25,7 +25,7 @@ const renderMovies = (movies) => {
     const { id, title, posterUrl, diaryId } = movie;
 
     const href = diaryId
-      ? `${Routes.detail}?${QueryParamKeys.movieId}=${id}&${QueryParamKeys.diaryId}=${diaryId}`
+      ? `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
       : `${Routes.write}`;
 
     const li = document.createElement("li");
