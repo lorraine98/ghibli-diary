@@ -1,4 +1,4 @@
-import { getDiaries, postDiary } from "../api/diaries.js";
+import { editDiary, getDiaries, postDiary } from "../api/diaries.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -13,19 +13,43 @@ const renderMovieTitle = (movieTitle) => {
   titleElement.textContent = movieTitle;
 };
 
+const handlePostDiary = async (requestForm) => {
+  const res = await postDiary(requestForm);
+
+  if (!res.ok) {
+    alert("일기 작성에 실패했어요");
+    return;
+  }
+
+  alert("일기를 작성했어요");
+  window.location.replace(
+    `${Routes.detail}?${QueryParamKeys.diaryId}=${res.data}`
+  );
+};
+
+const handleEditDiary = async (requestForm) => {
+  const res = await editDiary(diaryId, requestForm);
+
+  if (!res.ok) {
+    alert("일기 수정에 실패했어요");
+    return;
+  }
+
+  alert("일기를 수정했어요");
+  window.location.replace(
+    `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
+  );
+};
+
 const bindButtonsEvent = () => {
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit-button");
 
   cancelButton.addEventListener("click", () => {
-    // window.location.href = isEditMode
-    //   ? `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
-    //   : Routes.home;
     const to = isEditMode
       ? `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
       : Routes.home;
-    window.location.replace(to);
-    console.log(to);
+    window.location.href = to;
   });
 
   submitButton.addEventListener("click", async (e) => {
@@ -47,17 +71,7 @@ const bindButtonsEvent = () => {
       movieId,
     };
 
-    const res = await postDiary(requestForm);
-
-    if (!res.ok) {
-      alert("일기 작성에 실패했어요");
-      return;
-    }
-
-    alert("일기를 작성했어요");
-    window.location.replace(
-      `${Routes.detail}?${QueryParamKeys.diaryId}=${res.data.id}`
-    );
+    isEditMode ? handleEditDiary(requestForm) : handlePostDiary(requestForm);
   });
 };
 
