@@ -26,6 +26,10 @@
   outline: none;
 }
 
+.tab.active {
+  color: var(--color-pink);
+}
+
 .tab:hover {
   color: var(--color-pink);
 }

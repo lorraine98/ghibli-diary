@@ -1,13 +1,13 @@
 import { fetchMovies } from "../api/movies.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
+import { getSearchParamValue } from "../common/url-util.js";
 
-const queryParams = new URLSearchParams(window.location.search);
-let isDiaryWritten = queryParams.get(QueryParamKeys.isDiaryWritten) === "true";
-
-const renderMovies = (movies) => {
+const renderMovies = (movies, isDiaryWritten) => {
   const moviesList = document.querySelector(".movies-list");
   if (movies.length === 0) {
-    moviesList.textContent = "";
+    while (moviesList.firstChild) {
+      moviesList.removeChild(moviesList.firstChild);
+    }
     const li = document.createElement("li");
 
     isDiaryWritten
@@ -18,7 +18,9 @@ const renderMovies = (movies) => {
     return;
   }
 
-  moviesList.textContent = "";
+  while (moviesList.firstChild) {
+    moviesList.removeChild(moviesList.firstChild);
+  }
 
   movies.forEach((movie) => {
     const { id, title, posterUrl, diaryId } = movie;
@@ -47,35 +49,69 @@ const renderMovies = (movies) => {
   });
 };
 
-const pushWithNewUrl = () => {
+const pushWithNewUrl = (isDiaryWritten) => {
   const newUrl = `${Routes.home}?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`;
   window.history.pushState({ path: newUrl }, "", newUrl);
 };
 
-const fetchMoviesByDiaryWritten = async () => {
-  const { data } = await fetchMovies(isDiaryWritten);
-  renderMovies(data.movies);
+const fetchMoviesByDiaryWritten = async (isDiaryWritten) => {
+  const { data, ok, error } = await fetchMovies(isDiaryWritten);
+  if (!ok) {
+    console.error(error);
+    return [];
+  }
+  return data.movies;
 };
 
-const addTabClickEvent = () => {
-  const handleTabClick = (event) => {
-    isDiaryWritten = event.target.getAttribute("data-diary-written");
+const bindTabClickEvent = () => {
+  const handleTabClick = async (event) => {
+    const tab = event.target.closest(".tab");
+    const isDiaryWritten = tab.getAttribute("data-diary-written") === "true";
+    activateTab(isDiaryWritten);
 
-    pushWithNewUrl();
-    fetchMoviesByDiaryWritten();
+    pushWithNewUrl(isDiaryWritten);
+    const movies = await fetchMoviesByDiaryWritten(isDiaryWritten);
+    renderMovies(movies, isDiaryWritten);
   };
 
-  const tabButtons = document.querySelectorAll(".tab");
+  const tabContainer = document.querySelector(".navigation");
+  tabContainer.addEventListener("click", handleTabClick);
+};
 
-  tabButtons.forEach((link) => {
-    link.addEventListener("click", handleTabClick);
+const activateTab = (isDiaryWritten) => {
+  const tabContainer = document.querySelector(".navigation");
+  const tabs = tabContainer.querySelectorAll(".tab");
+  tabs.forEach((tab) => {
+    tab.classList.remove("active");
+    if (tab.getAttribute("data-diary-written") === String(isDiaryWritten)) {
+      tab.classList.add("active");
+    }
   });
 };
 
-const init = () => {
-  pushWithNewUrl();
-  fetchMoviesByDiaryWritten();
-  addTabClickEvent();
+const bindPopstateEvent = () => {
+  const handlePopState = async () => {
+    const isDiaryWritten =
+      getSearchParamValue(QueryParamKeys.isDiaryWritten) === "true";
+    activateTab(isDiaryWritten);
+    const movies = await fetchMoviesByDiaryWritten(isDiaryWritten);
+    renderMovies(movies, isDiaryWritten);
+  };
+
+  window.addEventListener("popstate", handlePopState);
+};
+
+const init = async () => {
+  const isDiaryWritten =
+    getSearchParamValue(QueryParamKeys.isDiaryWritten) === "true";
+
+  pushWithNewUrl(isDiaryWritten);
+  activateTab(isDiaryWritten);
+  const movies = await fetchMoviesByDiaryWritten(isDiaryWritten);
+  renderMovies(movies, isDiaryWritten);
+
+  bindPopstateEvent();
+  bindTabClickEvent();
 };
 
 init();
