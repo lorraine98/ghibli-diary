@@ -1,6 +1,8 @@
 import { fetchMovies } from "../api/movies.js";
+import { QueryParamKeys, Routes } from "../common/routes.js";
 
-let isDiaryWritten = false;
+const queryParams = new URLSearchParams(window.location.search);
+let isDiaryWritten = queryParams.get(QueryParamKeys.isDiaryWritten) === "true";
 
 const renderMovies = (movies) => {
   const moviesList = document.querySelector(".movies-list");
@@ -21,8 +23,8 @@ const renderMovies = (movies) => {
 
       // todo : session storage에 제목 저장하기
       const href = diaryId
-        ? `/detail/?movie-id=${id}&diary-id=${diaryId}`
-        : `/write/?movie-id=${id}`;
+        ? `${Routes.detail}?movie-id=${id}&diary-id=${diaryId}`
+        : `${Routes.write}?movie-id=${id}`;
 
       return `
           <li>
@@ -37,7 +39,9 @@ const renderMovies = (movies) => {
 };
 
 const pushWithNewUrl = () => {
-  const newUrl = `${window.location.pathname}?isDiaryWritten=${isDiaryWritten}`;
+  const uriBuilder = new URL(window.location.href);
+  uriBuilder.search = `?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`;
+  const newUrl = uriBuilder.href;
   window.history.pushState({ path: newUrl }, "", newUrl);
 };
 

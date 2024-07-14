@@ -1,4 +1,5 @@
 import { postDiary } from "../api/diaries.js";
+import { QueryParamKeys, Routes } from "../common/routes.js";
 
 const addButtonsEvent = () => {
   const cancelButton = document.querySelector(".cancel-button");
@@ -29,7 +30,7 @@ const addButtonsEvent = () => {
 
     postDiary(requestForm);
     alert("일기를 작성했어요");
-    window.location.href = "/home/?isDiaryWritten=true";
+    window.location.href = `${Routes.home}?${QueryParamKeys.isDiaryWritten}=true`;
   });
 };
 
