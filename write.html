@@ -9,27 +9,43 @@
 </head>
 
 <body>
-  <h1 class="title"></h1>
-  <form>
-    <p>작품은 어땠나요?</p>
-    <div class="evaluation">
-      <input checked type="radio" id="excellent" name="evaluation" value="excellent" />
-      <label for="excellent"> 👍 최고예요 </label>
+  <header>
+    <h1 class="title"></h1>
+  </header>
+  <main class="write-container">
+    <form>
+      <section class="evaluation">
+        <h2>작품은 어땠나요?</h2>
+        <div class="radio-groups">
+          <div class="radio-group">
+            <input type="radio" id="excellent" name="evaluation" value="excellent" checked />
+            <label for="excellent">👍 최고예요</label>
+          </div>
+          <div class="radio-group">
+            <input type="radio" id="average" name="evaluation" value="average" />
+            <label for="average">💪 무난해요</label>
+          </div>
+          <div class="radio-group">
+            <input type="radio" id="poor" name="evaluation" value="poor" />
+            <label for="poor">👎 별로예요</label>
+          </div>
+        </div>
+      </section>
 
-      <input type="radio" id="average" name="evaluation" value="average" />
-      <label for="average"> 💪 무난해요 </label>
+      <section class="content-section">
+        <h2>어떤 내용을 기록하고 싶나요?</h2>
+        <textarea class="content" required placeholder="여기에 적어주세요"></textarea>
+      </section>
 
-      <input type="radio" id="poor" name="evaluation" value="poor" />
-      <label for="poor"> 👎 별로예요 </label>
-    </div>
+      <section class="button-section">
+        <button class="cancel-button btn">취소</button>
+        <button class="submit-button btn" type="submit">완료</button>
+      </section>
 
-    <p>어떤 내용을 기록하고 싶나요?</p>
-    <textarea class="content" required placeholder="여기에 적어주세요"></textarea>
-    <div>
-      <button class="cancel-button">취소</button>
-      <button class="submit-button" type="submit">완료</button>
-    </div>
-  </form>
+    </form>
+
+  </main>
+
   <script src="./write/write.js" type="module"></script>
 </body>
 

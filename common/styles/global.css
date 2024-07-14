@@ -1,8 +1,13 @@
 @import "./reset.css";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
 }
+
 
 :root {
   --text-large: 54px;
@@ -10,6 +15,7 @@ body {
   --color-white: #fff;
   --color-gray: #777;
   --color-pink: #E55E70;
+  --color-dark-pink: #D24D62;
 }
 
 .btn {
@@ -23,5 +29,5 @@ body {
 }
 
 .btn:hover {
-  opacity: 0.8;
+  background-color: var(--color-dark-pink);
 }
