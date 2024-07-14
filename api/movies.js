@@ -1,5 +1,6 @@
-import { get } from "./requester.js";
+import { requester } from "./requester.js";
 
 export const fetchMovies = async (isDiaryWritten = false) => {
-  return await get(`/movies?isDiaryWritten=${isDiaryWritten}`);
+  const result = await requester.get("/api/v1/movies", { isDiaryWritten });
+  return result;
 };

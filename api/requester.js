@@ -1,33 +1,54 @@
-const API_BASE_URL = "http://localhost:3000/api/v1";
+const API_BASE_URL = "http://localhost:3000";
 
-const get = async (path, query) => {
+const StatusCode = {
+  Unknown: -1,
+};
+
+const RequestMethod = {
+  GET: "GET",
+  POST: "POST",
+};
+
+const request = async (path, options = {}) => {
+  const uri = `${API_BASE_URL}${path}`;
+  const defaultOptions = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
   try {
-    const url = query
-      ? `${API_BASE_URL}${path}${query}`
-      : `${API_BASE_URL}${path}`;
-
-    const res = await fetch(url);
-    return await res.json();
+    const response = await fetch(uri, { ...defaultOptions, ...options });
+    const data = await response.json();
+    return {
+      ok: response.ok,
+      statusCode: response.status,
+      data,
+    };
   } catch (error) {
-    console.error(error);
+    console.error(error?.message);
+    return {
+      ok: false,
+      statusCode: StatusCode.Unknown,
+      error,
+    };
   }
 };
 
-const post = async (path, body) => {
-  try {
-    const url = `${API_BASE_URL}${path}`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
+const get = async (urlPath, queryParams = {}) => {
+  const queryString = new URLSearchParams(queryParams).toString();
+  const url = queryString ? `${urlPath}?${queryString}` : urlPath;
+  return request(url);
 };
 
-export { get, post };
+const post = async (urlPath, body = {}) => {
+  return request(urlPath, {
+    method: RequestMethod.POST,
+    body: JSON.stringify(body),
+  });
+};
+
+export const requester = {
+  get,
+  post,
+};
