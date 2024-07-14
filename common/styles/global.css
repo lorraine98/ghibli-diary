@@ -3,3 +3,11 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+:root {
+  --text-large: 54px;
+
+  --color-white: #fff;
+  --color-gray: #777;
+  --color-pink: #E55E70;
+}
