@@ -12,9 +12,7 @@ const RequestMethod = {
 const request = async (path, options = {}) => {
   const uri = `${API_BASE_URL}${path}`;
   const defaultOptions = {
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
   };
 
   try {
@@ -35,16 +33,17 @@ const request = async (path, options = {}) => {
   }
 };
 
-const get = async (urlPath, queryParams = {}) => {
+const get = async (urlPath, queryParams = {}, options = {}) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
-  return request(url);
+  return request(url, options);
 };
 
-const post = async (urlPath, body = {}) => {
+const post = (urlPath, body = {}, options = {}) => {
   return request(urlPath, {
     method: RequestMethod.POST,
     body: JSON.stringify(body),
+    options,
   });
 };
 

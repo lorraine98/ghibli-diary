@@ -55,7 +55,7 @@ const pushWithNewUrl = () => {
 };
 
 const fetchMoviesByDiaryWritten = async () => {
-  const data = await fetchMovies(isDiaryWritten);
+  const{ data} = await fetchMovies(isDiaryWritten);
   renderMovies(data.movies);
 };
 
