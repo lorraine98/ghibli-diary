@@ -1,11 +1,15 @@
 import { editDiary, getDiaries, postDiary } from "../api/diaries.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
+import {
+  loadWritingDiary,
+  saveWritingDiary,
+} from "../common/session-storage.js";
+import { getSearchParamValue } from "../common/url-util.js";
 
-const urlSearchParams = new URLSearchParams(window.location.search);
-const movieId = urlSearchParams.get(QueryParamKeys.movieId);
-const movieTitle = urlSearchParams.get(QueryParamKeys.movieTitle);
+const movieId = getSearchParamValue(QueryParamKeys.movieId);
+const movieTitle = getSearchParamValue(QueryParamKeys.movieTitle);
+const diaryId = getSearchParamValue(QueryParamKeys.diaryId);
 
-const diaryId = urlSearchParams.get(QueryParamKeys.diaryId);
 const isEditMode = !!diaryId;
 
 const renderMovieTitle = (movieTitle) => {
@@ -41,6 +45,33 @@ const handleEditDiary = async (requestForm) => {
   );
 };
 
+const bindFormEvents = () => {
+  const writeForm = document.querySelector(".write-form");
+
+  const handleChange = (e) => {
+    const form = e.currentTarget;
+
+    if (isEditMode) {
+      return;
+    }
+
+    const contentTextarea = form.querySelector(".content");
+    const checkedEvaluationRadio = form.querySelector(
+      'input[name="evaluation"]:checked'
+    );
+
+    const requestForm = {
+      evaluation: checkedEvaluationRadio.value,
+      content: contentTextarea.value,
+      movieId,
+    };
+
+    saveWritingDiary(requestForm);
+  };
+
+  writeForm.addEventListener("change", handleChange);
+};
+
 const bindButtonsEvent = () => {
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit-button");
@@ -70,7 +101,6 @@ const bindButtonsEvent = () => {
       content: contentTextarea.value,
       movieId,
     };
-
     isEditMode ? handleEditDiary(requestForm) : handlePostDiary(requestForm);
   });
 };
@@ -91,9 +121,18 @@ const init = async () => {
     document.querySelector(".content").value = diary.content;
   } else {
     renderMovieTitle(movieTitle);
+
+    const writingFormData = loadWritingDiary(movieId);
+    if (writingFormData) {
+      document.querySelector(
+        `input[value="${writingFormData.evaluation}"]`
+      ).checked = true;
+      document.querySelector(".content").value = writingFormData.content;
+    }
   }
 
   bindButtonsEvent();
+  bindFormEvents();
 };
 
 init();
