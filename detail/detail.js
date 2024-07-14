@@ -4,7 +4,7 @@ import { QueryParamKeys, Routes } from "../common/routes.js";
 const getEvaluationText = (evaluation) => {
   switch (evaluation) {
     case "excellent":
-      return "👍 최고에요";
+      return "👍 최고예요";
     case "average":
       return "💪 무난해요";
     case "poor":
@@ -74,8 +74,8 @@ const bindButtonsEvent = () => {
   const dialog = document.querySelector(".delete-dialog");
 
   editButton.addEventListener("click", () => {
-    //todo: edit button event
-    // window.location.href = `${Routes.write}?${QueryParamKeys.diaryId}=${id}`;
+    const id = getDiaryId();
+    window.location.href = `${Routes.write}?${QueryParamKeys.diaryId}=${id}`;
   });
 
   deleteButton.addEventListener("click", () => {

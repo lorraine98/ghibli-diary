@@ -10,19 +10,6 @@ const saveToSessionStorage = (key, value) => {
   sessionStorage.setItem(key, value);
 };
 
-const WRITING_MOVIE_KEY = "WRITING_MOVIE";
-
-export const loadWritingMovie = () => {
-  return loadFromSessionStorage(WRITING_MOVIE_KEY);
-};
-
 /**
  * @param {{ id: string, title: string }} movie
  */
-export const saveWritingMovie = (movie) => {
-  saveToSessionStorage(WRITING_MOVIE_KEY, movie);
-};
-
-export const removeWritingMovie = () => {
-  sessionStorage.removeItem(WRITING_MOVIE_KEY);
-}

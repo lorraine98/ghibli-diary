@@ -1,30 +1,16 @@
-import { postDiary } from "../api/diaries.js";
+import { getDiaries, postDiary } from "../api/diaries.js";
 import { QueryParamKeys, Routes } from "../common/routes.js";
-import {
-  loadWritingMovie,
-  removeWritingMovie,
-} from "../common/session-storage.js";
 
-let movieId;
+const urlSearchParams = new URLSearchParams(window.location.search);
+const movieId = urlSearchParams.get(QueryParamKeys.movieId);
+const movieTitle = urlSearchParams.get(QueryParamKeys.movieTitle);
+
+const diaryId = urlSearchParams.get(QueryParamKeys.diaryId);
+const isEditMode = !!diaryId;
 
 const renderMovieTitle = (movieTitle) => {
   const titleElement = document.querySelector(".title");
   titleElement.textContent = movieTitle;
-};
-
-const getWritingMovie = () => {
-  const writingMovie = loadWritingMovie();
-
-  if (!writingMovie) {
-    alert("잘못된 접근입니다.");
-    window.location.href = Routes.home;
-    return;
-  }
-
-  const { id, title } = writingMovie;
-
-  movieId = id;
-  renderMovieTitle(title);
 };
 
 const bindButtonsEvent = () => {
@@ -32,7 +18,14 @@ const bindButtonsEvent = () => {
   const submitButton = document.querySelector(".submit-button");
 
   cancelButton.addEventListener("click", () => {
-    window.history.back();
+    // window.location.href = isEditMode
+    //   ? `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
+    //   : Routes.home;
+    const to = isEditMode
+      ? `${Routes.detail}?${QueryParamKeys.diaryId}=${diaryId}`
+      : Routes.home;
+    window.location.replace(to);
+    console.log(to);
   });
 
   submitButton.addEventListener("click", async (e) => {
@@ -61,7 +54,6 @@ const bindButtonsEvent = () => {
       return;
     }
 
-    removeWritingMovie();
     alert("일기를 작성했어요");
     window.location.replace(
       `${Routes.detail}?${QueryParamKeys.diaryId}=${res.data.id}`
@@ -69,8 +61,24 @@ const bindButtonsEvent = () => {
   });
 };
 
-const init = () => {
-  getWritingMovie();
+const init = async () => {
+  if (isEditMode) {
+    const { data, ok } = await getDiaries(diaryId);
+
+    if (!ok) {
+      console.error("failed to fetch diary");
+      return;
+    }
+
+    const { diary } = data;
+
+    renderMovieTitle(diary.movie.title);
+    document.querySelector(`input[value="${diary.evaluation}"]`).checked = true;
+    document.querySelector(".content").value = diary.content;
+  } else {
+    renderMovieTitle(movieTitle);
+  }
+
   bindButtonsEvent();
 };
 

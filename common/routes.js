@@ -7,4 +7,6 @@ export const Routes = Object.freeze({
 export const QueryParamKeys = Object.freeze({
   isDiaryWritten: "is-diary-written",
   diaryId: "diary-id",
+  movieId: "movie-id",
+  movieTitle: "movie-title",
 });
