@@ -74,12 +74,12 @@ const bindTabClickEvent = () => {
     renderMovies(movies, isDiaryWritten);
   };
 
-  const tabContainer = document.querySelector(".navigation");
+  const tabContainer = document.querySelector(".tab-container");
   tabContainer.addEventListener("click", handleTabClick);
 };
 
 const activateTab = (isDiaryWritten) => {
-  const tabContainer = document.querySelector(".navigation");
+  const tabContainer = document.querySelector(".tab-container");
   const tabs = tabContainer.querySelectorAll(".tab");
   tabs.forEach((tab) => {
     tab.classList.remove("active");

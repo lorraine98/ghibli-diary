@@ -9,39 +9,51 @@
 </head>
 
 <body>
-  <h1 class="movie-title"></h1>
-  <section class="diary-container">
-    <img class="poster" src="http://localhost:3000/images/img03.jpg" alt="movieTitle" />
-    <div>
-      <ul>
-        <li class="diary-detail">
-          <p class="diary-detail-label">개봉</p>
-          <p class="release-date"></p>
-        </li>
-        <li class="diary-detail">
-          <p class="diary-detail-label">평점</p>
-          <p class="rating"></p>
-        </li>
-        <li class="diary-detail">
-          <p class="diary-detail-label">작성일</p>
-          <p class="created-at"></p>
-        </li>
-        <li class="diary-detail">
-          <p class="diary-detail-label">내 평가</p>
-          <p class="evaluation"></p>
-        </li>
-        <li class="diary-detail content-container">
-          <p class="diary-detail-label">나의 기록</p>
-          <p class="content">
-          </p>
-        </li>
-      </ul>
-      <div class="buttons">
-        <button class="edit-button btn">수정</button>
-        <button class="delete-button btn">삭제</button>
+  <header class="header">
+    <nav>
+      <a class="header-link" href="/">
+        <img class="header-icon" src="/common/assets/home.svg" alt="go home">
+        <span>홈으로 가기</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="movie-title"></h1>
+    <section class="diary-container">
+      <img class="poster" src="http://localhost:3000/images/img03.jpg" alt="movieTitle" />
+      <div>
+        <ul>
+          <li class="diary-detail">
+            <p class="diary-detail-label">개봉</p>
+            <p class="release-date"></p>
+          </li>
+          <li class="diary-detail">
+            <p class="diary-detail-label">평점</p>
+            <p class="rating"></p>
+          </li>
+          <li class="diary-detail">
+            <p class="diary-detail-label">작성일</p>
+            <p class="created-at"></p>
+          </li>
+          <li class="diary-detail">
+            <p class="diary-detail-label">내 평가</p>
+            <p class="evaluation"></p>
+          </li>
+          <li class="diary-detail content-container">
+            <p class="diary-detail-label">나의 기록</p>
+            <p class="content">
+            </p>
+          </li>
+        </ul>
+        <div class="buttons">
+          <button class="edit-button btn">수정</button>
+          <button class="delete-button btn">삭제</button>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
+
   <dialog class="delete-dialog">
     <p>정말로 삭제할까요?</p>
     <div>
@@ -49,6 +61,7 @@
       <button class="delete-confirm-button btn">삭제</button>
     </div>
   </dialog>
+
   <script src="./detail/detail.js" type="module"></script>
 </body>
 

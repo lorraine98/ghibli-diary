@@ -33,3 +33,20 @@ body {
 .btn:hover {
   background-color: var(--color-dark-pink);
 }
+
+.header {
+  position: fixed;
+  padding: 20px;
+}
+
+.header-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.header-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-black);
+}

@@ -9,17 +9,28 @@
 </head>
 
 <body>
-  <h1 class="title">작품을 클릭해보세요</h1>
-  <p class="description">내가 기록한 내용을 상세하게 볼 수 있어요</p>
-  <nav class="navigation">
-    <button data-diary-written="false" class="tab tab-button-first">
-      기록하지 않은 작품
-    </button>
-    <button data-diary-written="true" class="tab tab-button-second">
-      기록한 작품
-    </button>
-  </nav>
-  <ul class="movies-list"></ul>
+  <header class="header">
+    <nav>
+      <a class="header-link" href="/">
+        <img class="header-icon" src="/common/assets/home.svg" alt="go home">
+        <span>홈으로 가기</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="title">작품을 클릭해보세요</h1>
+    <p class="description">내가 기록한 내용을 상세하게 볼 수 있어요</p>
+    <nav class="tab-container">
+      <button data-diary-written="false" class="tab tab-button-first">
+        기록하지 않은 작품
+      </button>
+      <button data-diary-written="true" class="tab tab-button-second">
+        기록한 작품
+      </button>
+    </nav>
+    <ul class="movies-list"></ul>
+  </main>
   <script src="./home/home.js" type="module"></script>
 </body>
 
