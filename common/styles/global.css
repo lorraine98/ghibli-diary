@@ -11,3 +11,17 @@ body {
   --color-gray: #777;
   --color-pink: #E55E70;
 }
+
+.btn {
+  background-color: var(--color-pink);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}

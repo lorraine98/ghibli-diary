@@ -63,8 +63,36 @@ const fetchDiary = async () => {
   renderDiary(data.diary);
 };
 
+const bindButtonsEvent = () => {
+  const editButton = document.querySelector(".edit-button");
+  const deleteButton = document.querySelector(".delete-button");
+  const dialog = document.querySelector(".delete-dialog");
+
+  editButton.addEventListener("click", () => {
+    //todo: edit button event
+    // window.location.href = `${Routes.write}?${QueryParamKeys.diaryId}=${id}`;
+  });
+
+  deleteButton.addEventListener("click", () => {
+    dialog.showModal();
+  });
+
+  dialog
+    .querySelector(".delete-cancel-button")
+    .addEventListener("click", () => {
+      dialog.close();
+    });
+
+  dialog
+    .querySelector(".delete-confirm-button")
+    .addEventListener("click", () => {
+      //todo: delete button event
+    });
+};
+
 const init = () => {
   fetchDiary();
+  bindButtonsEvent();
 };
 
 init();

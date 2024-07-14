@@ -27,7 +27,7 @@ const getWritingMovie = () => {
   renderMovieTitle(title);
 };
 
-const addButtonsEvent = () => {
+const bindButtonsEvent = () => {
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit-button");
 
@@ -71,7 +71,7 @@ const addButtonsEvent = () => {
 
 const init = () => {
   getWritingMovie();
-  addButtonsEvent();
+  bindButtonsEvent();
 };
 
 init();
