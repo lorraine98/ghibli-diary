@@ -47,15 +47,12 @@ const renderMovies = (movies) => {
 };
 
 const pushWithNewUrl = () => {
-  // `${Routes.home}?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`
-  const uriBuilder = new URL(window.location.href);
-  uriBuilder.search = `?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`;
-  const newUrl = uriBuilder.href;
+  const newUrl = `${Routes.home}?${QueryParamKeys.isDiaryWritten}=${isDiaryWritten}`;
   window.history.pushState({ path: newUrl }, "", newUrl);
 };
 
 const fetchMoviesByDiaryWritten = async () => {
-  const{ data} = await fetchMovies(isDiaryWritten);
+  const { data } = await fetchMovies(isDiaryWritten);
   renderMovies(data.movies);
 };
 

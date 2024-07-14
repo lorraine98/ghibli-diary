@@ -11,12 +11,9 @@ const RequestMethod = {
 
 const request = async (path, options = {}) => {
   const uri = `${API_BASE_URL}${path}`;
-  const defaultOptions = {
-    headers: { "Content-Type": "application/json" },
-  };
 
   try {
-    const response = await fetch(uri, { ...defaultOptions, ...options });
+    const response = await fetch(uri, options);
     const data = await response.json();
     return {
       ok: response.ok,
@@ -40,10 +37,16 @@ const get = async (urlPath, queryParams = {}, options = {}) => {
 };
 
 const post = (urlPath, body = {}, options = {}) => {
+  options.headers ??= {};
+  options.headers = {
+    "Content-Type": "application/json",
+    ...options.headers,
+  };
+
   return request(urlPath, {
+    ...options,
     method: RequestMethod.POST,
     body: JSON.stringify(body),
-    options,
   });
 };
 

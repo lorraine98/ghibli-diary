@@ -5,7 +5,7 @@ const createOptionsWithAccessToken = async (options = {}) => {
   let accessToken = getAccessToken();
 
   if (!accessToken) {
-    const loginResult = await requester.post("/auth/login");
+    const loginResult = await requester.post("/api/v1/auth/login");
     if (!loginResult.ok) {
       console.error("Failed to login");
       return options;

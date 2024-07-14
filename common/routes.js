@@ -1,7 +1,7 @@
 export const Routes = Object.freeze({
-  home: "/home/index.html",
-  write: "/write/index.html",
-  detail: "/detail/index.html",
+  home: "/home.html",
+  write: "/write.html",
+  detail: "/detail.html",
 });
 
 export const QueryParamKeys = Object.freeze({

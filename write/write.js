@@ -30,9 +30,15 @@ const addButtonsEvent = () => {
       movieId,
     };
 
-    postDiary(requestForm);
+    const res = await postDiary(requestForm);
+
+    if (!res.ok) {
+      alert("일기 작성에 실패했어요");
+      return;
+    }
+
     alert("일기를 작성했어요");
-    window.location.href = `${Routes.home}?${QueryParamKeys.isDiaryWritten}=true`;
+    window.location.href = `${Routes.detail}?${QueryParamKeys.movieId}=${movieId}`;
   });
 };
 
