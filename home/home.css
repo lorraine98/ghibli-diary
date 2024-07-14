@@ -49,6 +49,14 @@
   justify-items: center;
 }
 
+.empty {
+  display: flex;
+  justify-content: center;
+  font-size: var(--text-medium);
+  font-weight: bold;
+  margin-top: 164px;
+}
+
 .movie-link {
   color: var(--color-black);
   text-decoration: none;

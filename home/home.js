@@ -5,8 +5,11 @@ import { getSearchParamValue } from "../common/url-util.js";
 
 const renderMovieElements = (movies, isDiaryWritten) => {
   const $movieContainer = document.querySelector(".movie-list");
+  const isDiaryEmpty = movies.length === 0;
 
-  if (movies.length === 0) {
+  $movieContainer.classList.toggle("empty", isDiaryEmpty);
+
+  if (isDiaryEmpty) {
     const $movie = document.createElement("li");
     isDiaryWritten
       ? ($movie.textContent = "아직 기록한 작품이 없어요")
@@ -27,7 +30,6 @@ const createMovieElement = (movie) => {
     : `${routes.WRITE}?${queryParamKeys.MOVIE_ID}=${id}&${queryParamKeys.MOVIE_TITLE}=${title}`;
 
   const $movie = document.createElement("li");
-
   const $link = document.createElement("a");
   $link.setAttribute("href", href);
   $link.classList.add("movie-link");
@@ -43,8 +45,8 @@ const createMovieElement = (movie) => {
 
   $link.appendChild($poster);
   $link.appendChild($title);
-
   $movie.appendChild($link);
+
   return $movie;
 };
 
