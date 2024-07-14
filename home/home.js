@@ -15,23 +15,25 @@ const renderMovies = (movies) => {
     return;
   }
 
-  moviesList.innerHTML = movies.map((movie) => {
-    const { id, title, posterUrl, diaryId } = movie;
+  moviesList.innerHTML = movies
+    .map((movie) => {
+      const { id, title, posterUrl, diaryId } = movie;
 
-    // todo : session storage에 제목 저장하기
-    const href = diaryId
-      ? `/detail?movie-id=${id}&diary-id=${diaryId}`
-      : `/write?movie-id=${id}`;
+      // todo : session storage에 제목 저장하기
+      const href = diaryId
+        ? `/detail/?movie-id=${id}&diary-id=${diaryId}`
+        : `/write/?movie-id=${id}`;
 
-    return `
+      return `
           <li>
             <a href="${href}">
-              <img width="200px" crossorigin="anonymous" src="${posterUrl}" alt="${title}" />
+              <img width="200px" src="${posterUrl}" alt="${title}" />
               <p>${title}</p>
             </a>
           </li>
         `;
-  });
+    })
+    .join("");
 };
 
 const pushWithNewUrl = () => {
