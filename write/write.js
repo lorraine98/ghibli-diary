@@ -11,7 +11,9 @@ const addButtonsEvent = () => {
 
   submitButton.addEventListener("click", async (e) => {
     e.preventDefault();
-    const movieId = new URLSearchParams(window.location.search).get("movie-id");
+    const movieId = new URLSearchParams(window.location.search).get(
+      QueryParamKeys.movieId
+    );
     const contentTextarea = document.querySelector(".content");
     const checkedEvaluationRadio = document.querySelector(
       'input[name="evaluation"]:checked'
