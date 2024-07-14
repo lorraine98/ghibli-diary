@@ -1,5 +1,5 @@
-import { getDiaries } from "../api/diaries.js";
-import { QueryParamKeys } from "../common/routes.js";
+import { deleteDiary, getDiaries } from "../api/diaries.js";
+import { QueryParamKeys, Routes } from "../common/routes.js";
 
 const getEvaluationText = (evaluation) => {
   switch (evaluation) {
@@ -20,6 +20,13 @@ const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
+};
+
+const getDiaryId = () => {
+  const diaryId = new URLSearchParams(window.location.search).get(
+    QueryParamKeys.diaryId
+  );
+  return diaryId;
 };
 
 const renderDiary = (diary) => {
@@ -50,9 +57,7 @@ const renderDiary = (diary) => {
 };
 
 const fetchDiary = async () => {
-  const id = new URLSearchParams(window.location.search).get(
-    QueryParamKeys.diaryId
-  );
+  const id = getDiaryId();
   const { data, ok } = await getDiaries(id);
 
   if (!ok) {
@@ -83,11 +88,19 @@ const bindButtonsEvent = () => {
       dialog.close();
     });
 
+  const handleDeleteConfirmBtnClick = async () => {
+    const id = getDiaryId();
+    const result = await deleteDiary(id);
+    if (result.ok) {
+      window.location.replace(Routes.home);
+    } else {
+      alert("일기 삭제에 실패했어요. 다시 시도해주세요.");
+    }
+  };
+
   dialog
     .querySelector(".delete-confirm-button")
-    .addEventListener("click", () => {
-      //todo: delete button event
-    });
+    .addEventListener("click", handleDeleteConfirmBtnClick);
 };
 
 const init = () => {

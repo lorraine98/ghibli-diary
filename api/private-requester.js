@@ -30,7 +30,19 @@ const post = async (urlPath, body = {}, options = {}) => {
   return requester.post(urlPath, body, optionsWithToken);
 };
 
+const patch = async (urlPath, body = {}, options = {}) => {
+  const optionsWithToken = await createOptionsWithAccessToken(options);
+  return requester.patch(urlPath, body, optionsWithToken);
+};
+
+const remove = async (urlPath, queryParams = {}, options = {}) => {
+  const optionsWithToken = await createOptionsWithAccessToken(options);
+  return requester.remove(urlPath, queryParams, optionsWithToken);
+};
+
 export const privateRequester = {
   get,
   post,
+  patch,
+  remove,
 };
