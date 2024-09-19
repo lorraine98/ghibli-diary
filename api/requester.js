@@ -17,16 +17,14 @@ const request = async (path, options = {}) => {
   try {
     const response = await fetch(uri, options);
 
-    const hasContent =
-      response.headers.has("Content-Length") &&
-      response.headers.get("Content-Length") !== "0";
+    const hasContent = +response.headers.get("Content-Length") > 0;
 
     const isJsonResponse = response.headers
       .get("Content-Type")
       ?.includes("application/json");
 
-    const hasReceivedUnexpectedData = hasContent && !isJsonResponse;
-    if (hasReceivedUnexpectedData) {
+    const isUnexpectedResponse = hasContent && !isJsonResponse;
+    if (isUnexpectedResponse) {
       console.warn("Unexpected data received", await response.text());
     }
 

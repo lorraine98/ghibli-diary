@@ -7,6 +7,7 @@ const createOptionsWithAccessToken = async (options = {}) => {
 
   if (!accessToken) {
     const { data, ok } = await requester.post("/api/v1/auth/login");
+
     if (!ok) {
       console.error(errorMessage.failToLogin);
       return options;
