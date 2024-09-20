@@ -1,4 +1,4 @@
-import { getAccessToken, saveAccessToken } from "../common/auth.js";
+import { getAccessToken, saveAccessToken } from "../common/auth-storage.js";
 import { errorMessage } from "../common/error-message.js";
 import { requester } from "./requester.js";
 
