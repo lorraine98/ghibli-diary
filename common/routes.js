@@ -1,5 +1,5 @@
 export const routes = Object.freeze({
-  HOME: "/home.html",
+  HOME: "/index.html",
   WRITE: "/write.html",
   DETAIL: "/detail.html",
 });
