@@ -1,3 +1,5 @@
+import { login } from "./login.js";
+
 const API_BASE_URL = "http://localhost:3000";
 
 const statusCode = {
@@ -45,45 +47,62 @@ const request = async (path, options = {}) => {
   }
 };
 
-const get = async (urlPath, queryParams = {}, options = {}) => {
-  const queryString = new URLSearchParams(queryParams).toString();
-  const url = queryString ? `${urlPath}?${queryString}` : urlPath;
-  return request(url, options);
+const ContentTypeJsonHeaders = Object.freeze({
+  "Content-Type": "application/json",
+});
+
+const appendAuthorization = async (headers) => {
+  const accessToken = await login();
+  headers ??= {};
+  headers.Authorization = `Bearer ${accessToken}`;
+  return headers;
 };
 
-const post = (urlPath, body = {}, options = {}) => {
-  options.headers ??= {};
-  options.headers = {
-    "Content-Type": "application/json",
-    ...options.headers,
-  };
+const get = async (urlPath, queryParams = {}, { isPrivate }) => {
+  const queryString = new URLSearchParams(queryParams).toString();
+  const url = queryString ? `${urlPath}?${queryString}` : urlPath;
+
+  const headers = {};
+  if (isPrivate) {
+    await appendAuthorization(headers);
+  }
+  return request(url, { headers });
+};
+
+const post = async (urlPath, body = {}, { isPrivate }) => {
+  const headers = { ...ContentTypeJsonHeaders };
+  if (isPrivate) {
+    await appendAuthorization(headers);
+  }
 
   return request(urlPath, {
-    ...options,
+    headers,
     method: requestMethod.POST,
     body: JSON.stringify(body),
   });
 };
 
-const patch = (urlPath, body = {}, options = {}) => {
-  options.headers ??= {};
-  options.headers = {
-    "Content-Type": "application/json",
-    ...options.headers,
-  };
-
+const patch = async (urlPath, body = {}, { isPrivate }) => {
+  const headers = { ...ContentTypeJsonHeaders };
+  if (isPrivate) {
+    await appendAuthorization(headers);
+  }
   return request(urlPath, {
-    ...options,
+    headers,
     method: requestMethod.PATCH,
     body: JSON.stringify(body),
   });
 };
 
-const remove = (urlPath, queryParams = {}, options = {}) => {
+const remove = async (urlPath, queryParams = {}, { isPrivate }) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
+  const headers = {};
+  if (isPrivate) {
+    await appendAuthorization(headers);
+  }
   return request(url, {
-    ...options,
+    headers,
     method: requestMethod.DELETE,
   });
 };

@@ -1,21 +1,31 @@
-import { privateRequester } from "./private-requester.js";
+import { requester } from "./requester.js";
 
 export const getDiary = async (id) => {
-  const result = await privateRequester.get(`/api/v1/diaries/${id}`);
+  const result = await requester.get(
+    `/api/v1/diaries/${id}`,
+    {},
+    { isPrivate: true }
+  );
   return result;
 };
 
 export const postDiary = async (diary) => {
-  const result = await privateRequester.post("/api/v1/diaries", diary);
+  const result = await requester.post("/api/v1/diaries", diary, {
+    isPrivate: true,
+  });
   return result;
 };
 
 export const editDiary = async (id, diary) => {
-  const result = await privateRequester.patch(`/api/v1/diaries/${id}`, diary);
+  const result = await requester.patch(`/api/v1/diaries/${id}`, diary, {
+    isPrivate: true,
+  });
   return result;
 };
 
 export const deleteDiary = async (id) => {
-  const result = await privateRequester.remove(`/api/v1/diaries/${id}`);
+  const result = await requester.remove(`/api/v1/diaries/${id}`, {
+    isPrivate: true,
+  });
   return result;
 };
