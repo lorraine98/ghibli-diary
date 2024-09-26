@@ -1,4 +1,5 @@
-import { login } from "./login.js";
+import { getAccessToken, saveAccessToken } from "../common/auth-storage.js";
+import { errorMessage } from "../common/error-message.js";
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -47,6 +48,23 @@ const request = async (path, options = {}) => {
   }
 };
 
+const login = async () => {
+  let accessToken = getAccessToken();
+
+  if (!accessToken) {
+    const { data, ok } = await post("/api/v1/auth/login");
+
+    if (!ok) {
+      console.error(errorMessage.failToLogin);
+      return;
+    }
+    accessToken = data.accessToken;
+    saveAccessToken(accessToken);
+  }
+
+  return accessToken;
+};
+
 const ContentTypeJsonHeaders = Object.freeze({
   "Content-Type": "application/json",
 });
@@ -58,7 +76,7 @@ const appendAuthorization = async (headers) => {
   return headers;
 };
 
-const get = async (urlPath, queryParams = {}, { isPrivate }) => {
+const get = async (urlPath, queryParams = {}, isPrivate) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
 
@@ -69,7 +87,7 @@ const get = async (urlPath, queryParams = {}, { isPrivate }) => {
   return request(url, { headers });
 };
 
-const post = async (urlPath, body = {}, { isPrivate }) => {
+const post = async (urlPath, body = {}, isPrivate) => {
   const headers = { ...ContentTypeJsonHeaders };
   if (isPrivate) {
     await appendAuthorization(headers);
@@ -82,7 +100,7 @@ const post = async (urlPath, body = {}, { isPrivate }) => {
   });
 };
 
-const patch = async (urlPath, body = {}, { isPrivate }) => {
+const patch = async (urlPath, body = {}, isPrivate) => {
   const headers = { ...ContentTypeJsonHeaders };
   if (isPrivate) {
     await appendAuthorization(headers);
@@ -94,7 +112,7 @@ const patch = async (urlPath, body = {}, { isPrivate }) => {
   });
 };
 
-const remove = async (urlPath, queryParams = {}, { isPrivate }) => {
+const remove = async (urlPath, queryParams = {}, isPrivate) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
   const headers = {};
