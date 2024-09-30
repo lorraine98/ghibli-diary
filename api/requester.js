@@ -52,11 +52,7 @@ const login = async () => {
   let accessToken = getAccessToken();
 
   if (!accessToken) {
-    const { data, ok } = await post(
-      "/api/v1/auth/login",
-      {},
-      { isPrivate: false }
-    );
+    const { data, ok } = await post("/api/v1/auth/login", { isPrivate: false });
 
     if (!ok) {
       console.error(errorMessage.failToLogin);
@@ -80,7 +76,7 @@ const appendAuthorization = async (headers) => {
   return headers;
 };
 
-const get = async (urlPath, queryParams = {}, { isPrivate }) => {
+const get = async (urlPath, { queryParams = {}, isPrivate }) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
 
@@ -91,7 +87,7 @@ const get = async (urlPath, queryParams = {}, { isPrivate }) => {
   return request(url, { headers });
 };
 
-const post = async (urlPath, body = {}, { isPrivate }) => {
+const post = async (urlPath, { body = {}, isPrivate }) => {
   const headers = { ...ContentTypeJsonHeaders };
   if (isPrivate) {
     await appendAuthorization(headers);
@@ -104,7 +100,7 @@ const post = async (urlPath, body = {}, { isPrivate }) => {
   });
 };
 
-const patch = async (urlPath, body = {}, { isPrivate }) => {
+const patch = async (urlPath, { body = {}, isPrivate }) => {
   const headers = { ...ContentTypeJsonHeaders };
   if (isPrivate) {
     await appendAuthorization(headers);
@@ -116,7 +112,7 @@ const patch = async (urlPath, body = {}, { isPrivate }) => {
   });
 };
 
-const remove = async (urlPath, queryParams = {}, { isPrivate }) => {
+const remove = async (urlPath, { queryParams = {}, isPrivate }) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = queryString ? `${urlPath}?${queryString}` : urlPath;
   const headers = {};
