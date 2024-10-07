@@ -65,9 +65,9 @@ const login = async () => {
   return accessToken;
 };
 
-const ContentTypeJsonHeaders = Object.freeze({
+const ContentTypeJsonHeaders = {
   "Content-Type": "application/json",
-});
+};
 
 const appendAuthorization = async (headers) => {
   const accessToken = await login();
