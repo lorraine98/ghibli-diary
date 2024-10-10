@@ -37,10 +37,6 @@
   color: var(--color-pink);
 }
 
-.tab-button-first {
-  margin-right: 10px;
-}
-
 .movie-list {
   list-style-type: none;
   display: grid;
